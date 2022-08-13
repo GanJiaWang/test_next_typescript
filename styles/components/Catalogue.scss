@@ -1,0 +1,31 @@
+.ant-tabs-tab {
+    width: 200px;
+    justify-content: center;
+}
+.ant-tabs-tabpane {
+    text-align: -webkit-center !important;
+}
+
+@media only screen and (max-device-width: 786px) {
+    .ant-tabs-tab {
+        width: 150px;
+    }
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: black !important;
+    font-weight: bold !important;
+}
+
+.ant-tabs-content-holder {
+    align-self: center;
+}
+
+.ant-form-item-required {
+    flex-direction: row-reverse;
+}
+
+.ant-form-item-label
+    > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    margin-left: 5px;
+}
