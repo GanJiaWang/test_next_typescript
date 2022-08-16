@@ -1,46 +1,58 @@
-import type { UploadProps } from "antd";
-import { message, Upload } from "antd";
+/* eslint-disable jsx-a11y/alt-text */
+import { Upload } from "antd";
+import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import type { UploadChangeParam } from "antd/es/upload";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const { Dragger } = Upload;
 
-const props: UploadProps = {
-    name: "file",
-    multiple: true,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange(info) {
-        const { status } = info.file;
-        if (status !== "uploading") {
-            console.log(info.file, info.fileList);
-        }
-        if (status === "done") {
-            message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === "error") {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-    onDrop(e) {
-        console.log("Dropped files", e.dataTransfer.files);
-    },
+const getBase64 = (img: RcFile, callback: (url: string) => void) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result as string));
+    reader.readAsDataURL(img);
 };
 
-export const ImagePicker: React.FC = () => (
-    <div className="w-400px pt-7 xs:w-full">
-        <Dragger
-            {...props}
-            className="h-400px bg-transparent border-zinc-500 border-solid shadow-md xs:w-32 xs:h-32"
-            listType="picture-card"
-        >
-            <p className="ant-upload-drag-icon mb-0">
-                <Image
-                    src="/icons/add-image.png"
-                    height={35}
-                    width={40}
-                    alt="icon"
-                />
-            </p>
-            <p className="ant-upload-text font-semibold text-md">Add Image</p>
-        </Dragger>
-    </div>
-);
+export const ImagePicker: React.FC = () => {
+    const [selectedFileList, setSelectedFileList] = useState<any>();
+    const [imageUrl, setImageUrl] = useState<string>();
+
+    const handleChange: UploadProps["onChange"] = (
+        info: UploadChangeParam<UploadFile>
+    ) => {
+        setSelectedFileList([info.file]);
+        getBase64(info.file.originFileObj as RcFile, (url) => {
+            setImageUrl(url);
+        });
+    };
+
+    return (
+        <div className="w-400px pt-7 xs:w-full">
+            <Dragger
+                fileList={selectedFileList || []}
+                showUploadList={false}
+                onChange={handleChange}
+                listType="picture-card"
+                maxCount={5}
+            >
+                {imageUrl ? (
+                    <Image src={`${imageUrl}`} height={400} width={400} />
+                ) : (
+                    <div className="h-400px w-400px table-cell align-middle bg-white border-zinc-500 border-solid shadow-md xs:w-32 xs:h-32">
+                        <p className="ant-upload-drag-icon mb-0">
+                            <Image
+                                src="/icons/add-image.png"
+                                height={35}
+                                width={40}
+                                alt="icon"
+                            />
+                        </p>
+                        <p className="ant-upload-text font-semibold text-md">
+                            Add Image
+                        </p>
+                    </div>
+                )}
+            </Dragger>
+        </div>
+    );
+};

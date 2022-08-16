@@ -25,7 +25,18 @@ export const CatalogueRightForm: React.FC = () => {
     return (
         <Form
             name="basic"
-            initialValues={{ category: "T-Shirts", condition: "New" }}
+            initialValues={{
+                category: "T-Shirts",
+                condition: "New",
+                productName: "",
+                file: [],
+                brand: [],
+                description: "",
+                qty: null,
+                season: "",
+                retail: null,
+                declaration: false,
+            }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -59,7 +70,6 @@ export const CatalogueRightForm: React.FC = () => {
                         ]}
                         arrayData={["Collectibles", "Accessories", "T-Shirts"]}
                         required
-                        defaultValue="T-Shirts"
                     />
                 </Col>
                 <Col lg={8} md={24} sm={0} xs={0}>
@@ -136,7 +146,6 @@ export const CatalogueRightForm: React.FC = () => {
                         label="Condition"
                         name="condition"
                         arrayData={["Bad", "Fair", "Good", "New"]}
-                        defaultValue="New"
                         className="w-100px text-center xs:w-[70px]"
                     />
                 </Col>

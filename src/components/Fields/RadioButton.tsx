@@ -8,7 +8,6 @@ interface FormProps {
     rules?: Array<object>;
     arrayData?: Array<string>;
     required?: boolean;
-    defaultValue: string;
     className?: string;
 }
 
@@ -18,7 +17,6 @@ export const RadioButton: React.FC<FormProps> = ({
     rules,
     arrayData,
     required,
-    defaultValue,
     className,
 }) => (
     <Form.Item
@@ -28,7 +26,7 @@ export const RadioButton: React.FC<FormProps> = ({
         required={required}
         labelCol={{ className: "font-bold" }}
     >
-        <Radio.Group defaultValue={defaultValue} buttonStyle="solid">
+        <Radio.Group buttonStyle="solid">
             {_.map(arrayData, (d, i) => {
                 return (
                     <Radio.Button
