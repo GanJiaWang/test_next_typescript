@@ -24,15 +24,11 @@ export const UploadImage: React.FC<FormProps> = ({
     required,
 }) => {
     const [selectedFileList, setSelectedFileList] = useState<any>();
-    const [imageUrl, setImageUrl] = useState<string>();
 
     const handleChange: UploadProps["onChange"] = (
         info: UploadChangeParam<UploadFile>
     ) => {
-        setSelectedFileList([info.file]);
-        getBase64(info.file.originFileObj as RcFile, (url) => {
-            setImageUrl(url);
-        });
+        if (info.file.status !== "removed") setSelectedFileList([info.file]);
     };
 
     return (
@@ -45,8 +41,9 @@ export const UploadImage: React.FC<FormProps> = ({
         >
             <Upload
                 fileList={selectedFileList || []}
-                showUploadList={false}
                 onChange={handleChange}
+                maxCount={1}
+                onRemove={() => setSelectedFileList([])}
             >
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>

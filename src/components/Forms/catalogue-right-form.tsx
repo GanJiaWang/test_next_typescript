@@ -1,4 +1,4 @@
-import { Button, Form, Row, Col, Checkbox } from "antd";
+import { Button, Form, Row, Col } from "antd";
 import {
     TextInput,
     RadioButton,
@@ -9,10 +9,17 @@ import {
     CheckBox,
 } from "../Fields";
 import { useMediaQuery } from "react-responsive";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const CatalogueRightForm: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 786px)" });
+    const [gutter, setGutter] = useState<any>();
+    const [size, setSize] = useState<any>();
+
+    useEffect(() => {
+        setGutter(isMobile ? [20, 10] : [50, 30]);
+        setSize(isMobile ? "middle" : "large");
+    }, [isMobile]);
 
     const onFinish = (values: any) => {
         console.log("Success:", values);
@@ -43,7 +50,7 @@ export const CatalogueRightForm: React.FC = () => {
             layout="vertical"
             className="w-full px-20 pt-12 xs:px-5"
         >
-            <Row justify="start" gutter={isMobile ? [20, 10] : [50, 30]}>
+            <Row justify="start" gutter={gutter}>
                 <Col span={24}>
                     <TextInput
                         label="Product Name"
@@ -199,14 +206,12 @@ export const CatalogueRightForm: React.FC = () => {
                     className="text-right mt-14 xs:mt-5 xs:text-center"
                 >
                     <Form.Item className="xs:pb-10">
-                        <Button size={isMobile ? "middle" : "large"}>
-                            Cancel
-                        </Button>
+                        <Button size={size}>Cancel</Button>
                         <Button
                             type="primary"
                             htmlType="submit"
                             className="ml-5"
-                            size={isMobile ? "middle" : "large"}
+                            size={size}
                         >
                             Publish
                         </Button>

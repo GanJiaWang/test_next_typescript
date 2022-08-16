@@ -2,8 +2,9 @@
 import { Upload } from "antd";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import type { UploadChangeParam } from "antd/es/upload";
+import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const { Dragger } = Upload;
 
@@ -14,8 +15,16 @@ const getBase64 = (img: RcFile, callback: (url: string) => void) => {
 };
 
 export const ImagePicker: React.FC = () => {
+    const isMobile = useMediaQuery({ query: "(max-width: 786px)" });
     const [selectedFileList, setSelectedFileList] = useState<any>();
     const [imageUrl, setImageUrl] = useState<string>();
+    const [height, setHeight] = useState<number>();
+    const [width, setWidth] = useState<number>();
+
+    useEffect(() => {
+        setHeight(isMobile ? 150 : 400);
+        setWidth(isMobile ? 150 : 400);
+    }, [isMobile]);
 
     const handleChange: UploadProps["onChange"] = (
         info: UploadChangeParam<UploadFile>
@@ -27,7 +36,7 @@ export const ImagePicker: React.FC = () => {
     };
 
     return (
-        <div className="w-400px pt-7 xs:w-full">
+        <div className="w-400px pt-7 xs:w-32">
             <Dragger
                 fileList={selectedFileList || []}
                 showUploadList={false}
@@ -36,7 +45,7 @@ export const ImagePicker: React.FC = () => {
                 maxCount={5}
             >
                 {imageUrl ? (
-                    <Image src={`${imageUrl}`} height={400} width={400} />
+                    <Image src={`${imageUrl}`} height={height} width={width} />
                 ) : (
                     <div className="h-400px w-400px table-cell align-middle bg-white border-zinc-500 border-solid shadow-md xs:w-32 xs:h-32">
                         <p className="ant-upload-drag-icon mb-0">
