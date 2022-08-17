@@ -32,6 +32,7 @@ const HeaderComponents: React.FC = () => {
             <div className="float-right text-white font-bold mr-5 text-18px flex h-full xs:invisible">
                 <Badge className="self-center" dot>
                     <Image
+                        preview={false}
                         width={50}
                         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                     />
@@ -45,7 +46,9 @@ const HeaderComponents: React.FC = () => {
                 theme="dark"
                 mode="horizontal"
                 defaultSelectedKeys={["3"]}
-                selectedKeys={[`${router.query.menuNum ? router.query.menuNum : 3}`]}
+                selectedKeys={[
+                    `${router.query.menuNum ? router.query.menuNum : 3}`,
+                ]}
                 items={items1}
                 className="xs:invisible"
             />
