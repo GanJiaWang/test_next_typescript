@@ -18,7 +18,7 @@ const LeftPage: React.FC = () => {
     }, [isMobile]);
 
     return (
-        <div className="w-1/2 float-left flex justify-center border-solid border-r-2 h-screen pt-24 xs:border-0 xs:pt-0 xs:w-full xs:h-full">
+        <div className="w-1/2 float-left flex justify-center border-solid border-r-2 h-screen pt-24 xs:border-0 xs:pt-0 xs:w-full xs:h-full overflow-y-hidden">
             <Tabs defaultActiveKey="1" centered>
                 <TabPane tab="Image Gallery" key="1" className="text-black">
                     <ImagePicker />

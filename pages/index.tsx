@@ -1,20 +1,15 @@
-import { Layout } from "antd";
-import Head from "next/head";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
-import Header from "@components/App/Header";
-import Catalogue from "@components/Catalogue";
-import React from "react";
+const App: React.FC = () => {
+    const router = useRouter();
 
-const App: React.FC = () => (
-    <>
-        <Head>
-            <title>Next.JS</title>
-        </Head>
-        <Layout className="layout bg-white">
-            <Header />
-            <Catalogue />
-        </Layout>
-    </>
-);
+    useEffect(() => {
+        router.push({ pathname: "/catalogue" });
+    }, []);
+
+    return null;
+};
 
 export default App;
